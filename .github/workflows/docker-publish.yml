@@ -8,7 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: chatgpt2api
+  # 独立镜像名：fork 仓库无权写上游仓库创建的 ghcr.io 包，且分离后避免 latest 相互覆盖
+  IMAGE_NAME: chatgpt2api-new
 
 jobs:
   verify:
