@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 3.3.0 - 2026-09-10
+
++ [新增] 移植注册机功能：支持 cloudmail_gen、cloudflare_temp_email、tempmail_lol、moemail、inbucket、duckmail、gptmail、yyds_mail、ddg_mail 九种邮箱 provider 自动注册 OpenAI 账号，支持注册总数、号池剩余额度、可用账号数量三种模式，多线程并发注册并实时推送状态与日志。
++ [新增] 账号管理新增“一键刷新所有账号信息和额度”入口，无须选中账号，点击后直接开始全量同步并展示操作进度。
++ [新增] 注册机支持 REGISTER_MAIL 系列环境变量覆盖邮箱配置，环境变量优先级高于持久化配置。
+
 ## 3.2.3 - 2026-09-09
 
 + [新增] Python 图片接口和共享模型列表支持 `gpt-image-2.5`、`gpt-image-2.5-flare`、`gpt-image-2.5-sunburst`，通过 ChatGPT Web 的 `auto` 路由兼容，不包含 `exact` 别名。
