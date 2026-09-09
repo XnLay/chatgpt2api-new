@@ -255,6 +255,9 @@ export function useAccountsPage() {
   const runBulkAction = (...args: Parameters<typeof accountBulkActions.runBulkAction>) => (
     runBatchInteraction(() => accountBulkActions.runBulkAction(...args))
   )
+  const runSyncAllAccounts = () => runBatchInteraction(
+    () => accountBulkActions.runSyncAllAccounts(accountAllTotal.value),
+  )
   const bindSelectedAccountsToGroup = () => runBatchInteraction(accountBulkActions.bindSelectedAccountsToGroup)
 
   async function copyAccountCredential(item: Account, kind: 'access' | 'refresh') {
@@ -513,6 +516,7 @@ export function useAccountsPage() {
     refreshAccessToken,
     removeAccount,
     runBulkAction,
+    runSyncAllAccounts,
     bindSelectedAccountsToGroup,
     exportAccounts,
   }

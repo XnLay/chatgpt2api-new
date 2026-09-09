@@ -96,6 +96,15 @@
               size="sm"
               variant="outline"
               :root-class="accountToolbarSecondaryClass"
+              :disabled="batchBusy || accountOperationBusy || accountAllTotal === 0"
+              @click="runSyncAllAccounts"
+            >
+              一键刷新所有账号信息和额度
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              :root-class="accountToolbarSecondaryClass"
               :disabled="loading"
               @click="loadData"
             >
@@ -938,6 +947,7 @@ const {
   refreshAccessToken,
   removeAccount,
   runBulkAction,
+  runSyncAllAccounts,
   bindSelectedAccountsToGroup,
   exportAccounts,
 } = useAccountsPage()

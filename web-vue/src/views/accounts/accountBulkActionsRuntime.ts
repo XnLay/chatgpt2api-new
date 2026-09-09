@@ -64,6 +64,15 @@ function credentialActionMeta(action: AccountCredentialAction) {
     : { title: '批量刷新 AT', verb: '刷新 AT', kind: 'credentials' as const }
 }
 
+type CredentialActionMeta = ReturnType<typeof credentialActionMeta>
+
+/** 一键刷新所有账号信息和额度的操作文案（区别于按选中的批量同步）。 */
+const SYNC_ALL_ACTION_META: CredentialActionMeta = {
+  title: '一键刷新所有账号信息和额度',
+  verb: '刷新',
+  kind: 'sync',
+}
+
 export function useAccountBulkActionsRuntime(options: AccountBulkActionsRuntimeOptions) {
   const toast = useToast()
   const confirmDialog = useConfirmDialog()
@@ -73,9 +82,10 @@ export function useAccountBulkActionsRuntime(options: AccountBulkActionsRuntimeO
     target: AccountSelectionTarget,
     targetCount: number,
     useSelectionScope: boolean,
+    meta: CredentialActionMeta = credentialActionMeta(action),
+    skipConfirm = false,
   ) {
-    const meta = credentialActionMeta(action)
-    const confirmed = await confirmDialog.ask({
+    const confirmed = skipConfirm || await confirmDialog.ask({
       title: meta.title,
       message: useSelectionScope
         ? `即将${meta.verb}当前筛选条件下选中的 ${targetCount} 个账号，是否继续？`
@@ -125,6 +135,22 @@ export function useAccountBulkActionsRuntime(options: AccountBulkActionsRuntimeO
     } finally {
       options.bulkProgress.end()
     }
+  }
+
+  /** 一键刷新所有账号信息和额度：无须选中、无须确认，点击后直接开始（selection mode=all）。 */
+  async function runSyncAllAccounts(totalCount: number) {
+    if (!totalCount) {
+      toast.warning('没有可刷新的账号')
+      return
+    }
+    await runCredentialActionWithProgress(
+      'sync',
+      { mode: 'all' },
+      totalCount,
+      false,
+      SYNC_ALL_ACTION_META,
+      true,
+    )
   }
 
   async function runBulkAction(
@@ -251,6 +277,7 @@ export function useAccountBulkActionsRuntime(options: AccountBulkActionsRuntimeO
   return {
     requestStopRefreshProgress,
     runBulkAction,
+    runSyncAllAccounts,
     bindSelectedAccountsToGroup,
   }
 }
