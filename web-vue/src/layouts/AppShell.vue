@@ -805,6 +805,12 @@ const menuItems: NavigationItem[] = [
     capability: 'admin_console',
   },
   {
+    path: '/register',
+    label: '账号注册',
+    icon: 'M12 3a4 4 0 0 0-4 4v1H7a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3h-1V7a4 4 0 0 0-4-4zm-2 4a2 2 0 0 1 4 0v1h-4V7z',
+    capability: 'admin_console',
+  },
+  {
     path: '/logs',
     label: '日志管理',
     icon: 'M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h10v2H4v-2z',
@@ -833,6 +839,7 @@ const menuItems: NavigationItem[] = [
 const routeTitleMap: Record<string, string> = {
   dashboard: '概览中心',
   accounts: '账号管理',
+  register: '账号注册',
   logs: '日志管理',
   gallery: '图片管理',
   proxy: '代理管理',
